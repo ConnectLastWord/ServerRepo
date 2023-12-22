@@ -9,12 +9,10 @@ public class ApplicationService {
     // ApplicationService 객체 역할 = 클라이언트와 연결되는 소켓관리
     private ServerSocket server;
     private Socket child;
-    private RoomManager mgr;
 
     public ApplicationService() {
         try {
             server = new ServerSocket(8080);
-            mgr = new RoomManager();
         } catch (Exception e) {    //서버 소켓 생성에 실패하면
             e.printStackTrace();  //에러 메시지를 출력하고
             System.exit(0);       //프로그램을 종료한다.
@@ -28,7 +26,8 @@ public class ApplicationService {
         while (true) {
             try {
                 child = server.accept();
-                mgr.createThread(child);
+                Thread thread = new Thread(new ServiceThread(child));
+                thread.start();
             } catch (IllegalArgumentException e) {
                 if (e.getMessage().equals("이미 존재하는 채팅방입니다.")) {
                     child.close();

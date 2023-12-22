@@ -28,10 +28,6 @@ public class ServiceThread implements Runnable {
         }
     }
 
-    public ObjectInputStream getOis() {
-        return this.ois;
-    }
-
     @Override
     public void run() {
         try {
@@ -65,8 +61,5 @@ public class ServiceThread implements Runnable {
                 e2.printStackTrace();
             }
         }
-    }
-
-    public void isEmptyByCommand() {
     }
 }
