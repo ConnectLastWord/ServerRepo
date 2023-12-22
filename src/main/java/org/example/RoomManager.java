@@ -1,14 +1,10 @@
 package org.example;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class RoomManager {
     // RoomManager 역할 = 쓰레드만 관리한다.
-    private final static Thread[] tArr = new Thread[5];
-    ObjectInputStream ois;
-    ObjectOutputStream oos;
+    private static Thread[] tArr = new Thread[5];
 
     public RoomManager() {
         tArr[0] = new Thread();
@@ -17,13 +13,26 @@ public class RoomManager {
         tArr[1].setName("22");
     }
 
-    public static boolean validateThread(String cmd) {
+    public static boolean duplicateThread(String cmd) {
         for (int i = 0; i < tArr.length; i++) {
-            if (tArr[i].getName().equals(cmd)) {
+            if (tArr[i] != null) {
+                if (tArr[i].getName().equals(cmd)) {
+                    throw new IllegalArgumentException("중복된 채팅방 이름입니다.");
+                }
+            } else {
                 return true;
             }
         }
-        return false;
+        throw new IllegalArgumentException("더 이상 채팅방 생성이 어렵습니다.");
+    }
+
+    public static void addThread(Thread thread) {
+        for (int i = 0; i < tArr.length; i++) {
+            if (tArr[i] == null) {
+                tArr[i] = thread;
+                return;
+            }
+        }
     }
 
     public static void validateEmpty(String cmd){
