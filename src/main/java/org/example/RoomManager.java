@@ -26,21 +26,14 @@ public class RoomManager {
         return false;
     }
 
+    public static void validateEmpty(String cmd){
+        if (cmd.trim().isEmpty()){
+            throw new IllegalArgumentException("방이름은 공백이 불가능합니다.");
+        }
+    }
+
     public void createThread(Socket child) {
         Thread thread = new Thread(new ServiceThread(child));
         thread.start();
-    }
-
-    private boolean isEmptyByCommand(String cmd) {
-        cmd = cmd.trim();
-        for (Thread t : tArr) {
-            if (t == null) {
-                return false;
-            }
-            if (t.getName().equals(cmd) || cmd.isEmpty() || cmd.length() == 0) {
-                return true;
-            }
-        }
-        return false;
     }
 }

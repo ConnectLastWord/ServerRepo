@@ -13,7 +13,7 @@ public class ApplicationService {
 
     public ApplicationService() {
         try {
-            server = new ServerSocket(8080);
+            server = new ServerSocket(5000);
         } catch (Exception e) {    //서버 소켓 생성에 실패하면
             e.printStackTrace();  //에러 메시지를 출력하고
             System.exit(0);       //프로그램을 종료한다.

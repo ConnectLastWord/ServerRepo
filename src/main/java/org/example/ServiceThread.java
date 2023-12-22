@@ -33,10 +33,10 @@ public class ServiceThread implements Runnable {
             while (true) {
                 receiveData = (String) ois.readObject();
                 System.out.println(child.getInetAddress() + "의 메시지:" + receiveData);
-//                if (RoomManager.validateThread(receiveData)) {
-//
-//                }
+                RoomManager.validateEmpty(receiveData);
             }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("클라이언트가 강제 종료");
